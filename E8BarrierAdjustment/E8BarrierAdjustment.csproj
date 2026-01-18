@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<OutputPath>/home/hex3/.config/r2modmanPlus-local/RiskOfRain2/profiles/Modding/BepInEx/plugins/</OutputPath>
+		<OutputPath>/home/hex3/Documents/modding/E8BarrierAdjustment-Export/</OutputPath>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 

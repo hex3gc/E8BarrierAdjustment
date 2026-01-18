@@ -4,11 +4,13 @@ using RoR2;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace E8BarrierAdjustment
 {
     [BepInPlugin(E8BARRIERADJUSTMENT_GUID, E8BARRIERADJUSTMENT_NAME, E8BARRIERADJUSTMENT_VER)]
     [BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.HardDependency)]
+    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class Main : BaseUnityPlugin
     {
         public const string E8BARRIERADJUSTMENT_GUID = "com.Hex3.E8BarrierAdjustment";
@@ -27,17 +29,17 @@ namespace E8BarrierAdjustment
             IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
             {
                 ILCursor c = new ILCursor(il);
-                if 
-                (c.TryGotoNext
-                    (
-                        x => x.MatchCall(out _),
-                        x => x.MatchDiv(),
-                        x => x.MatchLdcR4(100f),
-                        x => x.MatchMul(),
-                        x => x.MatchLdcR4(0.4f),
-                        x => x.MatchStloc(out _)
-                    )
-                )
+
+                c.TryGotoNext(x => x.MatchLdsfld(typeof(RoR2Content.Buffs), nameof(RoR2Content.Buffs.PermanentCurse)));
+                bool hit = c.TryGotoPrev
+                (
+                    x => x.MatchCall(out _),
+                    x => x.MatchDiv(),
+                    x => x.MatchLdcR4(out _),
+                    x => x.MatchMul()
+                );
+
+                if (hit)
                 {
                     c.Index += 4;
                     c.Emit(OpCodes.Ldarg, 0);
