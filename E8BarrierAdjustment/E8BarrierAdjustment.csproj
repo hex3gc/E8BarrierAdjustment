@@ -22,6 +22,13 @@
 		<PackageReference Include="MMHOOK.RoR2" Version="*" NoWarn="NU1701" />
 		<PackageReference Include="RoR2BepInExPack" Version="*" />
 
-		<Lang Include="Language/en/en.language" />
+		<Reference Include="Sandswept">
+			<HintPath>E8BarrierAdjustment/libs/Sandswept.dll</HintPath>
+			<private>false</private>
+		</Reference>
+		<Reference Include="RiskOfOptions">
+			<HintPath>BucketList/libs/RiskOfOptions.dll</HintPath>
+			<private>false</private>
+		</Reference>
 	</ItemGroup>
 </Project>
